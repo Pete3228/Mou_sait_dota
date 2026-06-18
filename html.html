@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>The Anti-Draft — Анализ Dota 2</title>
+    <meta name="description" content="Анализ игровой статистики Dota 2">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo-area">
+                <h1>The Anti-Draft</h1>
+                <span class="patch-badge">Патч 7.41d</span>
+            </div>
+            <div class="header-right">
+                <button id="steamLoginBtn" class="btn-login">Войти</button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </header>
+        <nav class="navbar" id="mainNav">
+            <ul class="nav-menu">
+                <li><a href="#" data-page="home" class="nav-link active">Главная</a></li>
+                <li><a href="#" data-page="heroes" class="nav-link">Анализ героев</a></li>
+                <li><a href="#" data-page="builds" class="nav-link">Сборки предметов</a></li>
+                <li><a href="#" data-page="meta" class="nav-link">Мета-статистика</a></li>
+                <li><a href="#" data-page="profile" class="nav-link">ПРОфиль</a></li>
+            </ul>
+        </nav>
+        <main id="main-content">
+		<section id="home-page" class="page active-page">
+		<div class="hero-banner">
+			<h2>Быстрый выбор героя</h2>
+				<input type="text" id="quickHeroSearch" placeholder="Поиск..." class="search-input">
+			<div class="filter-group">
+				<label>Фильтры:</label>
+				<select id="roleFilterHome" class="filter-select">
+					<option value="all">Все роли</option>
+					<option value="Carry">Керри</option>
+					<option value="Midlane">Мидер</option>
+					<option value="Support">Сапорт</option>
+					<option value="Initiator">Инициатор</option>
+					<option value="Escape">Эскейп</option>
+					<option value="Pusher">Пушер</option>
+					<option value="Nuker">Нюкер</option>
+					<option value="Disabler">Дизейблер</option>
+				</select>
+				<span id="heroCount" class="hero-count">40 героев</span>
+			</div>
+		</div>
+		<div class="two-columns">
+			<div class="column">
+				<h3>Популярные герои</h3>
+				<div id="popularHeroesList" class="hero-grid">Загрузка...</div>
+			</div>
+        <div class="column">
+            <h3>Контр-пики меты и героев</h3>
+            <div class="counter-list">
+                <select id="counterHeroSelect" class="hero-select">
+                    <option value="">-- Выбери героя --</option>
+                </select>
+                <div id="counterResult" class="counter-result">
+                    <p>Выбери героя для анализа контр-пиков</p>
+                </div>
+                <a href="#" data-page="heroes" class="btn-link nav-link" id="goToHeroesBtn">Анализ героев →</a>
+            </div>
+        </div>
+		</div>
+		</section>
+            <section id="heroes-page" class="page">
+                <h2>Анализ героев</h2>
+                <p class="subtitle">Поиск и сравнение героев</p>
+                <div class="compare-container">
+                    <div class="compare-inputs">
+                        <input type="text" id="hero1Search" placeholder="Введите имя героя 1..." class="search-input hero-compare-input">
+                        <input type="text" id="hero2Search" placeholder="Введите имя героя 2..." class="search-input hero-compare-input">
+                    </div>
+                    <div class="compare-results" id="compareResults">
+                        <div class="hero-compare-card" id="hero1Card">
+                            <div class="hero-compare-empty">
+                                <div class="hero-compare-icon">🎯</div>
+                                <p>Введите имя героя</p>
+                            </div>
+                        </div>
+                        <div class="hero-compare-card" id="hero2Card">
+                            <div class="hero-compare-empty">
+                                <div class="hero-compare-icon">🎯</div>
+                                <p>Введите имя героя</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-detail-note">
+                    <p>Например: Juggernaut, Pudge, Invoker, Crystal Maiden, Puck, Io</p>
+                    <div class="data-sources">
+                        <span>Данные от</span>
+                        <a href="https://www.opendota.com" target="_blank" rel="noopener">OpenDota API</a>
+                        <span>|</span>
+                        <a href="https://www.dotabuff.com" target="_blank" rel="noopener">Dotabuff</a>
+                        <span>|</span>
+                        <a href="https://stratz.com" target="_blank" rel="noopener">Stratz</a>
+                    </div>
+                </div>
+            </section>
+            <section id="builds-page" class="page">
+                <h2>Сборки предметов</h2>
+                <div class="builds-layout">
+                    <div class="hero-selector">
+                        <h3>Выберите героя</h3>
+                        <div id="buildHeroList" class="hero-buttons-list"></div>
+                    </div>
+                    <div id="buildDetail" class="build-detail">
+                        <div class="build-empty">
+                            <div class="build-empty-icon">🛡️</div>
+                            <p>Выберите героя из списка</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="build-footer-note">
+                    <p>* Процент в скобках — частота покупки данного предмета. Данные на основе OpenDota API.</p>
+                </div>
+            </section>
+            <section id="meta-page" class="page">
+                <h2>Мета-статистика</h2>
+                <div class="meta-trends">
+                    <div class="trend-up">
+                        <h3>"Растущие" герои</h3>
+                        <div id="trendingUp" class="trend-list"></div>
+                    </div>
+                    <div class="trend-down">
+                        <h3>"Падающие" герои</h3>
+                        <div id="trendingDown" class="trend-list"></div>
+                    </div>
+                </div>
+                <div class="meta-filters">
+                    <label>Фильтр по роли:</label>
+                    <select id="metaRoleFilter">
+                        <option value="all">Все</option>
+                        <option value="Carry">Керри</option>
+                        <option value="Midlane">Мидер</option>
+                        <option value="Support">Сапорт</option>
+                        <option value="Initiator">Инициатор</option>
+                        <option value="Escape">Эскейп</option>
+                        <option value="Pusher">Пушер</option>
+                        <option value="Nuker">Нюкер</option>
+                        <option value="Disabler">Дизейблер</option>
+                    </select>
+                    <span id="metaHeroCount">126 героев</span>
+                </div>
+                <div class="meta-table-container">
+                    <table class="meta-table">
+                        <thead>
+                            <tr><th>#</th><th>Герой</th><th>Побед</th><th>🎯Пиков</th><th>Роль</th>
+                        </thead>
+                        <tbody id="metaTableBody"><tr><td colspan="5">Загрузка...</td></tr></tbody>
+                    </table>
+                </div>
+            </section>
+<section id="profile-page" class="page">
+    <h2>ПРОфиль <span style="font-size:0.6rem; color:#7a7e8e;">(почти профиль, но с матчами)</span></h2>
+    <div class="profile-card">
+        <p>Введи Steam ID для просмотра статистики</p>
+        <div class="profile-input-group">
+            <input type="text" id="steamIdInput" placeholder="Steam ID (32-bit или 64-bit)" class="search-input">
+            <button id="loadProfileBtn" class="btn-primary">Найти</button>
+        </div>
+        <p class="hint">Где найти Steam ID? Открой Steam → свой профиль → скопируй ID из URL</p>
+        <div id="profileStats" class="profile-stats"></div>
+    </div>
+</section>
+        </main>
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="https://www.opendota.com" target="_blank" rel="noopener">OpenDota API</a>
+                <span>·</span>
+                <a href="https://www.dotabuff.com" target="_blank" rel="noopener">Dotabuff</a>
+                <span>·</span>
+                <a href="https://stratz.com" target="_blank" rel="noopener">Stratz</a>
+            </div>
+            <div class="footer-contact">
+                <span class="contact-label">Напишите нам</span>
+                <div class="social-buttons">
+                    <a href="https://t.me/Pete228" target="_blank" rel="noopener" class="social-btn telegram">Telegram</a>
+                    <a href="https://vk.com/petepolka" target="_blank" rel="noopener" class="social-btn vk">VK</a>
+                </div>
+            </div>
+            <p>The Anti-Draft · анализ Dota 2 · Патч 7.41d</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
